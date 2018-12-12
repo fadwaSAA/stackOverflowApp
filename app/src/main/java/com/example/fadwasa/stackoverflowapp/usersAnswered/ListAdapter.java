@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;

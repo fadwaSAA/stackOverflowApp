@@ -1,8 +1,11 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.BadgeCounts;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ViewModel {
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.BadgeCounts;
+
+public class ViewModel implements Parcelable{
     private Integer bronze;
     private String profileImage1;
     private String name;
@@ -13,6 +16,34 @@ public class ViewModel {
         profileImage1 = profileImage;
          this.name = name;
     }
+
+    protected ViewModel(Parcel in) {
+        if (in.readByte() == 0) {
+            bronze = null;
+        } else {
+            bronze = in.readInt();
+        }
+        profileImage1 = in.readString();
+        name = in.readString();
+        if (in.readByte() == 0) {
+            accountId = null;
+        } else {
+            accountId = in.readInt();
+        }
+    }
+
+    public static final Creator<ViewModel> CREATOR = new Creator<ViewModel>() {
+        @Override
+        public ViewModel createFromParcel(Parcel in) {
+            return new ViewModel(in);
+        }
+
+        @Override
+        public ViewModel[] newArray(int size) {
+            return new ViewModel[size];
+        }
+    };
+
     public String getName() {
         return name;
     }
@@ -39,5 +70,28 @@ public class ViewModel {
     }
     public void setProfileImage1(String profileImage1) {
         this.profileImage1 = profileImage1;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (bronze == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(bronze);
+        }
+        parcel.writeString(profileImage1);
+        parcel.writeString(name);
+        if (accountId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(accountId);
+        }
     }
 }

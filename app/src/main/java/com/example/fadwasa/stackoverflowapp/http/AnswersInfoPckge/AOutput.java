@@ -1,15 +1,19 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
+
+/**
+ * Created by Fadwasa on 21/11/2018 AD.
+ */
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Output {
+public class AOutput {
 
     @SerializedName("items")
     @Expose
-    private List<Item> items = null;
+    private List<AItem> items = null;
     @SerializedName("has_more")
     @Expose
     private Boolean hasMore;
@@ -20,11 +24,11 @@ public class Output {
     @Expose
     private Integer quotaRemaining;
 
-    public List<Item> getItems() {
+    public List<AItem> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<AItem> items) {
         this.items = items;
     }
 

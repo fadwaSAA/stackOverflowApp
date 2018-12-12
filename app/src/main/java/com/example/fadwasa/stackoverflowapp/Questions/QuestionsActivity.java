@@ -1,5 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.fadwasa.stackoverflowapp.R;
+import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.root.App;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QuestionsActivity extends AppCompatActivity implements QuestionsActivityMVP.View {
+public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.View {
 
     private final String TAG = QuestionsActivity.class.getName();
 
@@ -37,6 +39,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsAct
     private ListAdapter listAdapter;
     private List<ViewModel> resultList = new ArrayList<>();
     String accountID;
+    ProgressDialog progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsAct
          ((App) getApplication()).getQComponent().injectQ(this);
 
         ButterKnife.bind(this);
+        progressBar=new ProgressDialog(this.getApplicationContext());
+
+        presenter.setView(this);
+        presenter.loadData(accountID);
 
         listAdapter = new ListAdapter(this.getApplicationContext(),resultList);
         recyclerView.setAdapter(listAdapter);
@@ -59,23 +67,14 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsAct
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.setView(this);
-        Log.d("vall","useridddd000"+accountID);
 
-        presenter.loadData(accountID);
-    }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         presenter.rxUnsubscribe();
         resultList.clear();
         listAdapter.notifyDataSetChanged();
-
-
     }
 
 
@@ -86,8 +85,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsAct
     }
 
     @Override
-    public void showSnackbar(String msg) {
-        Snackbar.make(rootView, msg, Snackbar.LENGTH_SHORT).show();
+    public void showSnackbar(String msg,ViewGroup rootView1) {
+        rootView1=rootView;
+        super.showSnackbar(msg,rootView1);
+     }
 
-    }
 }

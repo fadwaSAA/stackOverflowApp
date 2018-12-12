@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +37,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     @Override
     public void onBindViewHolder(ListItemViewHolder holder, int position) {
-
+        Log.d("cc", "counttt" + list.get(position).getAcceptedAnswetID());
         holder.questionTitle.setText(list.get(position).getTitle());
-       holder.questionsCount.setText(list.get(position).getAnswerCount().toString());
-        holder.nameA.setText(list.get(position).getName());
+        holder.questionsCount.setText(list.get(position).getAnswerCount().toString());
+        if (list.get(position).getName() != null && list.get(position).getProfileImage1() != null){
+            holder.nameA.setText(list.get(position).getName());
         Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.profileImageA);
+        }
         holder.setQuestionID(list.get(position).getQuestionID()+"");
 
 

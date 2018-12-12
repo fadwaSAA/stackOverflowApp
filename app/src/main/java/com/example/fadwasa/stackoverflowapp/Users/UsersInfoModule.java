@@ -1,8 +1,10 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
-import com.example.fadwasa.stackoverflowapp.http.UserInfo;
+import android.content.Context;
 
-import javax.inject.Singleton;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
+import com.example.fadwasa.stackoverflowapp.root.App;
+import com.example.fadwasa.stackoverflowapp.root.UserScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -10,21 +12,21 @@ import dagger.Provides;
 @Module
 public class UsersInfoModule {
 
+    Context context;
+    public UsersInfoModule(Context context) {
+        this.context=context;
+    }
+
     @Provides
-    public UsersActivityMVP.Presenter provideUsersActivityPresenter(UsersActivityMVP.Model usersModel) {
+     public UsersActivityMVP.Presenter provideUsersActivityPresenter(UsersActivityMVP.Model usersModel) {
         return new UsersPresenter(usersModel);
     }
 
-    @Provides
-    public UsersActivityMVP.Model provideTopUsersActivityModel(Repository repository) {
-        return new UsersModel(repository);
-    }
 
-    @Singleton
+    @UserScope
     @Provides
-    public Repository provideRepo(UserInfo userApiService) {
-        return new UsersRepository(userApiService );
+    public UsersActivityMVP.Model provideTopUsersActivityModel(UserInfo userApiService) {
+        return new UsersModel(userApiService);
     }
-
 
 }

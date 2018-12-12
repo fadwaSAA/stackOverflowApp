@@ -1,8 +1,8 @@
 package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 
-public class ViewModel {
+public class ViewModel   {
      private String profileImage1;
     private String name;
     private Integer accountId;

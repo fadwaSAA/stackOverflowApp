@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,12 +23,12 @@ import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private List<ViewModel> list;
+    private ArrayList<ViewModel> list;
     private Context mContext;
     private Integer id;
 
 
-    public ListAdapter(Context context, List<ViewModel> list) {
+    public ListAdapter(Context context, ArrayList<ViewModel> list) {
         this.list = list;
         mContext=context;
     }

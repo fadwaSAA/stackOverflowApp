@@ -1,6 +1,6 @@
-package com.example.fadwasa.stackoverflowapp.http;
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOutput;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOutput;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

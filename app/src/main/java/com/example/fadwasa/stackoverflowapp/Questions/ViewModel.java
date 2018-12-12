@@ -1,8 +1,8 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
-import com.example.fadwasa.stackoverflowapp.http.apimodel.Owner;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
+import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.Owner;
 
 public class ViewModel {
     private Integer userID;
@@ -15,21 +15,39 @@ public class ViewModel {
     private String title;
     private Owner owner;
 
+    public ViewModel(){
+    this.userID = null;
+        this.profileImage1 = null;
+        this.Answeredname = null;
+        this.acceptedAnswetID = null;
+        this.answerCount = null;
+        this.questionID = null;
+        this.title = null;
+        this.owner = null;
+    }
 
+    public ViewModel(Integer acceptedAnswetID, Integer answerCount, Integer questionID, String title, Owner owner, AOwner answer) {
 
-
-    public ViewModel(Integer acceptedAnswetID, Integer answerCount, Integer questionID, String tile, Owner owner, AOwner answer) {
          this.acceptedAnswetID=acceptedAnswetID;
          this.answerCount=answerCount;
          this.questionID=questionID;
-         this.title=tile;
+         this.title=title;
          this.owner=owner;
          this.profileImage1=answer.getProfileImage();
          this.Answeredname=answer.getDisplayName();
 
+    }
 
+    public ViewModel(Integer acceptedAnswerId, Integer answerCount, Integer questionId, String title, Owner owner) {
+
+        this.acceptedAnswetID=acceptedAnswerId;
+        this.answerCount=answerCount;
+        this.questionID=questionId;
+        this.title = title;
+        this.owner=owner;
 
     }
+
     public String getName() {
         return Answeredname;
     }

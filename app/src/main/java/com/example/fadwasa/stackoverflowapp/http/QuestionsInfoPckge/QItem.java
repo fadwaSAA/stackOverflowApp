@@ -1,4 +1,4 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
+package com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge;
 
 /**
  * Created by Fadwasa on 20/11/2018 AD.

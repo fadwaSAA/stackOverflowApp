@@ -1,13 +1,15 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
 
 /**
- * Created by Fadwasa on 20/11/2018 AD.
+ * Created by Fadwasa on 21/11/2018 AD.
  */
+
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
+public class AOwner {
 
     @SerializedName("reputation")
     @Expose
@@ -18,9 +20,6 @@ public class Owner {
     @SerializedName("user_type")
     @Expose
     private String userType;
-    @SerializedName("accept_rate")
-    @Expose
-    private Integer acceptRate;
     @SerializedName("profile_image")
     @Expose
     private String profileImage;
@@ -30,6 +29,9 @@ public class Owner {
     @SerializedName("link")
     @Expose
     private String link;
+    @SerializedName("accept_rate")
+    @Expose
+    private Integer acceptRate;
 
     public Integer getReputation() {
         return reputation;
@@ -55,14 +57,6 @@ public class Owner {
         this.userType = userType;
     }
 
-    public Integer getAcceptRate() {
-        return acceptRate;
-    }
-
-    public void setAcceptRate(Integer acceptRate) {
-        this.acceptRate = acceptRate;
-    }
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -85,6 +79,14 @@ public class Owner {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Integer getAcceptRate() {
+        return acceptRate;
+    }
+
+    public void setAcceptRate(Integer acceptRate) {
+        this.acceptRate = acceptRate;
     }
 
 }

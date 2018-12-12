@@ -1,6 +1,13 @@
 package com.example.fadwasa.stackoverflowapp.http;
 
+import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QuestionInfo;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.UserAnsweredInfo;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
+import com.example.fadwasa.stackoverflowapp.root.UserScope;
+
 import java.io.IOException;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -51,7 +58,8 @@ public class ApiModuleForInfo {
                 .build();
     }
 
-    @Provides
+     @Provides
+
     public UserInfo provideApiService() {
         return provideRetrofit(BASE_URL, provideClient()).create(UserInfo.class);
     }

@@ -1,7 +1,8 @@
-package com.example.fadwasa.stackoverflowapp.http;
+package com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.Output;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Output;
 
+import dagger.Module;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

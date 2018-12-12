@@ -1,4 +1,4 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
+package com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg;
 
 
 import com.google.gson.annotations.Expose;

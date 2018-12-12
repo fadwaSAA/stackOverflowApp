@@ -1,18 +1,23 @@
 package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
+import com.example.fadwasa.stackoverflowapp.baseMVP.BasePresenter;
+import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presenter {
+public class UsersAnsweredPresenter extends BasePresenter implements UsersAnsweredActivityMVP.Presenter {
 
     private UsersAnsweredActivityMVP.View view;
     private Disposable subscription = null;
     private UsersAnsweredActivityMVP.Model model;
+    private BaseView baseView = new BaseView();
+
 
     public UsersAnsweredPresenter(UsersAnsweredActivityMVP.Model model) {
         this.model = model;
@@ -21,21 +26,31 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
     @Override
     public void loadData(String questionID) {
 
-        subscription = model
-                .result(questionID)
+        subscription =
+                result(questionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<AOwner>() {
                     @Override
+                    protected void onStart() {
+                        super.onStart();
+                        view.ShowProgressBar();
+
+                    }
+
+                    @Override
                     public void onComplete() {
+
+                        view.hideProgressBar();
                     }
 
 
                     @Override
                     public void onError(Throwable e) {
+                        view.hideProgressBar();
                         e.printStackTrace();
                         if (view != null) {
-                            view.showSnackbar("Error getting users");
+                            view.showSnackbar("Error getting users",null);
                         }
                     }
 
@@ -50,16 +65,18 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
 
     @Override
     public void rxUnsubscribe() {
-        if (subscription != null) {
-            if (!subscription.isDisposed()) {
-                subscription.dispose();
-            }
-        }
+        super.rxUnsubscribe(subscription);
+
     }
 
     @Override
     public void setView(UsersAnsweredActivityMVP.View view) {
         this.view = view;
+    }
+
+    @Override
+    public Observable<AOwner> result(String questionID) {
+        return   model.getAnsweredData(questionID);
     }
 
 }
