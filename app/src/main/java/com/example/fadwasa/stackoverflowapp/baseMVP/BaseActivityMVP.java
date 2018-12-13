@@ -22,7 +22,7 @@ public interface BaseActivityMVP {
         void ShowProgressBar();
 
         void hideProgressBar();
-    }
+      }
 
     interface Presenter {
         void rxUnsubscribe();
