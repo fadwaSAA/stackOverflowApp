@@ -21,7 +21,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     private ArrayList<ViewModel> list;
     private Context mContext;
-    private Integer id;
 
     public ListAdapter(Context context, ArrayList<ViewModel> list) {
         this.list = list;
@@ -39,8 +38,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     public void onBindViewHolder(ListItemViewHolder holder, int position) {
 
         holder.profileNameA.setText(list.get(position).getName());
-        Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.imageA);
+          Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.imageA);
         holder.setIdU(list.get(position).getAccountId());
+
     }
 
     @Override

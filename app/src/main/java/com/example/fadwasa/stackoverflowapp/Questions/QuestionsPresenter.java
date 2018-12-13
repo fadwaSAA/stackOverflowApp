@@ -1,6 +1,9 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
+import android.util.Log;
+
 import com.example.fadwasa.stackoverflowapp.baseMVP.BasePresenter;
+import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AItem;
 import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QItem;
 
@@ -11,11 +14,12 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class QuestionsPresenter extends BasePresenter implements QuestionsActivityMVP.Presenter {
 
     private QuestionsActivityMVP.View view;
     private Disposable subscription = null;
-    private QuestionsActivityMVP.Model model;
+     private QuestionsActivityMVP.Model model;
     public QuestionsPresenter(QuestionsActivityMVP.Model model) {
         this.model = model;
     }
@@ -80,10 +84,11 @@ public class QuestionsPresenter extends BasePresenter implements QuestionsActivi
                     @Override
                     public ViewModel apply(QItem result, AItem aItem) {
                         if(aItem.getOwner()!=null)
-                            return new ViewModel(result.getAcceptedAnswerId(),result.getAnswerCount(),result.getQuestionId(),result.getTitle(),result.getOwner(),aItem.getOwner());
 
+                        return new ViewModel(result.getAcceptedAnswerId(),result.getAnswerCount(),result.getQuestionId(),result.getTitle(),result.getOwner(),aItem.getOwner());
                         else
-                            return new ViewModel(result.getAcceptedAnswerId(),result.getAnswerCount(),result.getQuestionId(),result.getTitle(),result.getOwner());
+                        return new ViewModel(result.getAcceptedAnswerId(),result.getAnswerCount(),result.getQuestionId(),result.getTitle(),result.getOwner());
+
                     }
                 }
         );    }

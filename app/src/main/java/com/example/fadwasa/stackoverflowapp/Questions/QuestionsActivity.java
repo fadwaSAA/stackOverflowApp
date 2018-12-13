@@ -3,24 +3,17 @@ package com.example.fadwasa.stackoverflowapp.Questions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-
 import com.example.fadwasa.stackoverflowapp.R;
 import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.root.App;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,26 +35,28 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
     String accountID;
     ProgressDialog progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.questions_activity);
         Intent intent = getIntent();
+          accountID = intent.getStringExtra("accountID");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        accountID = intent.getStringExtra("accountID");
-
         ((App) getApplication()).getQComponent().injectQ(this);
-
         ButterKnife.bind(this);
         progressBar=new ProgressDialog(this.getApplicationContext());
+
         presenter.setView(this);
 
-        if (savedInstanceState == null){
+        if(savedInstanceState==null){
             presenter.loadData(accountID);
             initAdapter();
         }
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -86,22 +81,24 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         resultList = savedInstanceState.getParcelableArrayList("viewmodelList");
-         initAdapter();
+        initAdapter();
+
     }
 
     private void initAdapter() {
         listAdapter = new ListAdapter(this.getApplicationContext(),resultList);
         recyclerView.setAdapter(listAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this));
+        recyclerView.addItemDecoration(new com.example.fadwasa.stackoverflowapp.usersAnswered.DividerItemDecoration(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-     @Override
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelableArrayList("viewmodelList",   resultList);
-         super.onSaveInstanceState(savedInstanceState);}
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,5 +109,4 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -2,7 +2,6 @@ package com.example.fadwasa.stackoverflowapp.Users;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +10,11 @@ import com.example.fadwasa.stackoverflowapp.R;
 import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.root.App;
 import java.util.ArrayList;
-import javax.inject.Inject;
+ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
-
-    private final String TAG = UsersActivity.class.getName();
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -30,7 +27,8 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
 
     private ListAdapter listAdapter;
     private ArrayList<ViewModel> resultList = new ArrayList<>();
-    private ProgressDialog progressBar;
+      ProgressDialog progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +37,8 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
         ((App) getApplication()).getUserApplicationComponent().inject(this);
         ButterKnife.bind(this);
         progressBar = new ProgressDialog(this);
-        presenter.setView(this);
 
+        presenter.setView(this);
         if (savedInstanceState == null){
             presenter.loadData();
             initAdapter();
@@ -68,8 +66,7 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         resultList = savedInstanceState.getParcelableArrayList("viewmodelList");
-        char charec = savedInstanceState.getChar("charr");
-        initAdapter();
+         initAdapter();
 
     }
 
@@ -82,13 +79,10 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    // invoked when the activity may be temporarily destroyed, save the instance state here
-    @Override
+     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelableArrayList("viewmodelList",   resultList);
-        savedInstanceState.putChar("charr",'a');
-        // call superclass to save any view hierarchy
-        super.onSaveInstanceState(savedInstanceState);
+         super.onSaveInstanceState(savedInstanceState);
     }
 
 }

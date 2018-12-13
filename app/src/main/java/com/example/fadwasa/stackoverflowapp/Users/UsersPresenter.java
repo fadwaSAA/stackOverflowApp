@@ -1,7 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
 import com.example.fadwasa.stackoverflowapp.baseMVP.BasePresenter;
-import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.BadgeCounts;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Item;
 import io.reactivex.Observable;
@@ -14,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public class UsersPresenter extends BasePresenter implements UsersActivityMVP.Presenter {
 
     private UsersActivityMVP.View view;
-    private Disposable subscription = null;
+     private Disposable subscription = null;
     private UsersActivityMVP.Model model;
 
     public UsersPresenter(UsersActivityMVP.Model model) {
@@ -84,4 +83,6 @@ public class UsersPresenter extends BasePresenter implements UsersActivityMVP.Pr
                 }
         );
     }
+
+
 }

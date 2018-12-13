@@ -1,8 +1,11 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
 import android.content.Context;
+
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
+import com.example.fadwasa.stackoverflowapp.root.App;
 import com.example.fadwasa.stackoverflowapp.root.UserScope;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -24,4 +27,5 @@ public class UsersInfoModule {
     public UsersActivityMVP.Model provideTopUsersActivityModel(UserInfo userApiService) {
         return new UsersModel(userApiService);
     }
+
 }

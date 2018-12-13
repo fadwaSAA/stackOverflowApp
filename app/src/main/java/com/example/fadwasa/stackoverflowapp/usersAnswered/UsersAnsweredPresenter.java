@@ -1,7 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -68,4 +67,5 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
     public Observable<AOwner> result(String questionID) {
         return   model.getAnsweredData(questionID);
     }
+
 }

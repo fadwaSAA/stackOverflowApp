@@ -1,9 +1,15 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AItem;
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.Owner;
+
+import java.util.List;
 
 public class ViewModel implements Parcelable{
     private Integer userID;
@@ -36,7 +42,6 @@ public class ViewModel implements Parcelable{
         this.owner=owner;
         this.profileImage1 = aOwner.getProfileImage();
         this.Answeredname = aOwner.getDisplayName();
-
     }
 
     public ViewModel(Integer acceptedAnswerId, Integer answerCount, Integer questionId, String title, Owner owner) {
@@ -45,7 +50,6 @@ public class ViewModel implements Parcelable{
         this.questionID=questionId;
         this.title = title;
         this.owner=owner;
-
     }
 
     protected ViewModel(Parcel in) {
@@ -106,10 +110,6 @@ public class ViewModel implements Parcelable{
     }
 
 
-
-
-
-
     public void setProfileImage1(Owner owner) {
         this.profileImage1=owner.getProfileImage();
     }
@@ -123,9 +123,7 @@ public class ViewModel implements Parcelable{
     }
 
     public void setAcceptedAnswetID(Integer acceptedAnswetID) {
-        this.acceptedAnswetID = acceptedAnswetID;
-    }
-
+        this.acceptedAnswetID = acceptedAnswetID;}
     public void setAnswerCount(Integer answerCount) {
         this.answerCount = answerCount;
     }

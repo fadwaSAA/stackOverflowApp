@@ -62,6 +62,8 @@ public class ViewModel implements Parcelable{
     public void setAccountId(Integer accountId) {
         this.accountId=accountId;}
 
+
+
     public void setName(String name) {
         this.name = name;
     }

@@ -5,6 +5,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
+
 public interface QuestionInfo {
     @GET("users/{id}/questions")
     Observable<QOutput> getQuestionsInfo(@Path("id") String id,

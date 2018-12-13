@@ -1,8 +1,15 @@
 package com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg;
 
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Output;
+
+import dagger.Module;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+
+/**
+ * Created by Fadwasa on 18/11/2018 AD.
+ */
 
 public interface UserInfo {
     @GET("users")

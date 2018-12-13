@@ -1,5 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

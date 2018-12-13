@@ -3,7 +3,10 @@ package com.example.fadwasa.stackoverflowapp.http;
 import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QuestionInfo;
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.UserAnsweredInfo;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
+
 import java.io.IOException;
+
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.HttpUrl;
@@ -21,6 +24,8 @@ public class ApiModuleForInfo {
 
     public final String BASE_URL = "https://api.stackexchange.com/2.2/";
 
+
+
     @Provides
     public OkHttpClient provideClient() {
 
@@ -32,9 +37,6 @@ public class ApiModuleForInfo {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 HttpUrl url = request.url().newBuilder().addQueryParameter(
-                        "key",
-                        "IVw9wvYmsZXeXTGa7bxEBg(("
-                ).addQueryParameter(
                         "site",
                         "stackoverflow"
                 ).build();
@@ -68,4 +70,5 @@ public class ApiModuleForInfo {
     public UserAnsweredInfo provideApiServiceA() {
         return provideRetrofit(BASE_URL, provideClient()).create(UserAnsweredInfo.class);
     }
+
 }

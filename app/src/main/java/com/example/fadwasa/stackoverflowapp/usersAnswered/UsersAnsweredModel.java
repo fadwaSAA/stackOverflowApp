@@ -11,6 +11,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
+
 public class UsersAnsweredModel extends BaseModel implements UsersAnsweredActivityMVP.Model {
 
     private UserAnsweredInfo userInfo;
@@ -18,7 +19,7 @@ public class UsersAnsweredModel extends BaseModel implements UsersAnsweredActivi
     private long timestamp;
     private List<AOwner> owners;
     private boolean sameID=false;
-    private static final long STALE_MS = 20 * 1000; // Data is stale after 20 seconds
+
 
     public UsersAnsweredModel(UserAnsweredInfo userInfo ) {
          this.timestamp = System.currentTimeMillis();
@@ -27,12 +28,16 @@ public class UsersAnsweredModel extends BaseModel implements UsersAnsweredActivi
         results = new ArrayList<>();
     }
 
+
     @Override
     public Observable<AItem> getResultsFromMemory(String questionID) {
         if (isUpToDate(timestamp)&&results.size() != 0) {
             if (results.get(0).getQuestionId()+"" == questionID) {
+
                 sameID=true;
+
                 return Observable.fromIterable(results);
+
             }
             else {
                 sameID=false;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     private ArrayList<ViewModel> list;
     private Context mContext;
+    private Integer id;
+
 
     public ListAdapter(Context context, ArrayList<ViewModel> list) {
         this.list = list;
@@ -40,16 +41,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
         holder.profileName.setText(list.get(position).getName());
         holder.bronzeBadge.setText(list.get(position).getBronze().toString());
-        Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.image);
+         Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.image);
         holder.setIdU(list.get(position).getAccountId());
+
     }
 
     @Override
     public int getItemCount() {
+
         return list.size();
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {
+
 
         @BindView(R.id.bronze_badge)
         TextView bronzeBadge;
@@ -61,20 +65,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
         @OnClick
         void onClick(View view) {
-            Bundle bundle = new Bundle();
+             Bundle bundle = new Bundle();
             bundle.putString("accountID",idU.toString() );
             Intent intent = new Intent(view.getContext(), QuestionsActivity.class);
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             view.getContext().startActivity(intent);
+
         }
 
         public ListItemViewHolder(View itemView ) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-        }
+            this.idU=idU;
 
+        }
         void  setIdU(Integer idU){
+
             this.idU=idU;
         }
     }

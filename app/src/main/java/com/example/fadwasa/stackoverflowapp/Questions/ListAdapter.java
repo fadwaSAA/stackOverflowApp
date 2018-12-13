@@ -29,27 +29,35 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     @Override
     public ListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_list, parent, false);
+        View itemView =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.question_list, parent, false);
         return new ListItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ListItemViewHolder holder, int position) {holder.questionTitle.setText(list.get(position).getTitle());
+    public void onBindViewHolder(ListItemViewHolder holder, int position) {
+
+        holder.questionTitle.setText(list.get(position).getTitle());
        holder.questionsCount.setText(list.get(position).getAnswerCount().toString());
 
         if(list.get(position).getProfileImage1()!=null && list.get(position).getName()!=null) {
             holder.nameA.setText(list.get(position).getName());
+
             Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.profileImageA);
         }
         holder.setQuestionID(list.get(position).getQuestionID()+"");
+
+
     }
 
     @Override
     public int getItemCount() {
+
         return list.size();
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {
+
 
         @BindView(R.id.title)
         TextView questionTitle;
@@ -67,20 +75,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
         @OnClick
         void onClick(View view) {
             Bundle bundle = new Bundle();
-            bundle.putString("questionID",questionID+"");
+            bundle.putString("questionID",questionID.toString() );
             Intent intent = new Intent(view.getContext(), UsersAnsweredActivity.class);
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             view.getContext().startActivity(intent);
+
         }
 
 
-        private ListItemViewHolder(View itemView) {
+        public ListItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
-
         void setQuestionID(String questionID){
+
           this.questionID=questionID;
         }
     }

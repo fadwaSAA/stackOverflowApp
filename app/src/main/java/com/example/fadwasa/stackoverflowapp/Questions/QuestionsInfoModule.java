@@ -8,6 +8,7 @@ import com.example.fadwasa.stackoverflowapp.root.QuestionScope;
 import dagger.Module;
 import dagger.Provides;
 
+
 @Module
 public class QuestionsInfoModule {
     Context context;
@@ -24,4 +25,5 @@ public class QuestionsInfoModule {
     public QuestionsActivityMVP.Model provideTopUsersActivityModel(QuestionInfo userApiService, UserAnsweredInfo userAnsweredInfo) {
         return new QuestionsModel(userApiService,userAnsweredInfo);
     }
+
 }

@@ -10,7 +10,8 @@ import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QOutput;
 import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.Observable;
- import io.reactivex.functions.Consumer;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 
@@ -21,22 +22,19 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
         private List<QItem> qItemList;
         private List<AItem> aItemList;
         private long timestamp;
-        private AOutput aOutput;
         Observable<QItem>qItemObservable;
-        private static final long STALE_MS = 20 * 1000; // Data is stale after 20 seconds
         boolean questionsSame;
+        private static final long STALE_MS = 20 * 1000; // Data is stale after 20 seconds
 
-    public QuestionsModel(QuestionInfo questionInfo, UserAnsweredInfo userAnsweredInfo) {
+        public QuestionsModel(QuestionInfo questionInfo, UserAnsweredInfo userAnsweredInfo) {
             this.timestamp = System.currentTimeMillis();
             this.questionInfo = questionInfo;
             this.userAnsweredInfo=userAnsweredInfo;
             qItemList = new ArrayList<>();
             aItemList = new ArrayList<>();
-        }
+         }
 
-    public boolean isUpToDate() {
-            return System.currentTimeMillis() - timestamp < STALE_MS;
-        }
+
 
 
     @Override
@@ -60,14 +58,13 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
         }
     }
 
-
     @Override
     public Observable<QItem> getResultsFromNetwork(String userID) {
         Observable<QOutput> qOutputObservable = questionInfo.getQuestionsInfo(userID+"","desc","activity");
         qItemObservable= qOutputObservable.concatMap(new Function<QOutput, Observable<QItem>>(){
             @Override
             public Observable<QItem> apply(QOutput qOutput) throws Exception {
-                return Observable.fromIterable(qOutput.getItems());//qOutput.getItems()
+                return Observable.fromIterable(qOutput.getItems());
             }
         }).doOnNext(new Consumer<QItem>() {
             @Override
@@ -77,7 +74,6 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
         });
         return qItemObservable;
     }
-
     @Override
     public Observable<AItem> getAcceptedFromMemory() {
         if (isUpToDate(timestamp)) {
@@ -92,8 +88,9 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
             timestamp = System.currentTimeMillis();
             aItemList.clear();
             return Observable.empty();
-        }
-    }
+        }}
+
+
 
     @Override
     public Observable<AItem> getAcceptedFromNetwork(String userID) {
@@ -112,7 +109,7 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
                         break;
                     }
                 }
-                return Observable.just(AcceptedItem);
+                 return Observable.just(AcceptedItem);
             }
         }).doOnNext(new Consumer<AItem>() {
             @Override
@@ -131,7 +128,6 @@ public class QuestionsModel extends BaseModel implements QuestionsActivityMVP.Mo
     public Observable<QItem> getResultData(String userID) {
         return getResultsFromMemory(userID).switchIfEmpty(getResultsFromNetwork( userID));
     }
-
 
 
 }

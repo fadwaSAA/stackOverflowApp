@@ -1,5 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
+
 import com.example.fadwasa.stackoverflowapp.baseMVP.BaseModel;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.BadgeCounts;
@@ -11,9 +12,10 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
+
 public class UsersModel extends BaseModel implements UsersActivityMVP.Model  {
 
-    private UserInfo userInfo;
+     private UserInfo userInfo;
     private List<Item> results;
     private List<BadgeCounts> badges;
     private long timestamp;
@@ -25,6 +27,7 @@ public class UsersModel extends BaseModel implements UsersActivityMVP.Model  {
         badges = new ArrayList<>();
         results = new ArrayList<>();
     }
+
 
     @Override
     public Observable<Item> getResultsFromMemory() {

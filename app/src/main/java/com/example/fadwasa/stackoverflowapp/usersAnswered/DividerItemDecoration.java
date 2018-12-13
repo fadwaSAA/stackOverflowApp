@@ -9,7 +9,6 @@ import android.view.View;
 import com.example.fadwasa.stackoverflowapp.R;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
-
     private Drawable mDivider;
 
     public DividerItemDecoration(Context context) {

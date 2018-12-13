@@ -20,6 +20,9 @@ public class App extends Application {
     private AnswerApplicationComponent aComponent;
     private QuestionApplicationComponent qComponent;
 
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,19 +46,15 @@ public class App extends Application {
 
     }
 
-    public ApplicationComponent getComponent() {
-        return component;
-    }
-
-    public UserApplicationComponent getUserApplicationComponent() {
+     public UserApplicationComponent getUserApplicationComponent() {
         return uComponent;
     }
 
-    public AnswerApplicationComponent getAnsweredComponenet() {
+     public AnswerApplicationComponent getAnsweredComponenet() {
         return aComponent;
     }
 
-    public QuestionApplicationComponent getQComponent() {
+     public QuestionApplicationComponent getQComponent() {
         return qComponent;
     }
 }

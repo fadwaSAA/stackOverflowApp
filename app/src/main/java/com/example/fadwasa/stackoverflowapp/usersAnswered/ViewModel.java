@@ -2,6 +2,7 @@ package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 
 public class ViewModel implements Parcelable{
@@ -49,20 +50,13 @@ public class ViewModel implements Parcelable{
 
 
 
-     public void setAccountId(AOwner owner) {
+    public void setAccountId(AOwner owner) {
          this.accountId=owner.getUserId();
      }
-
-
-
     public void setName(AOwner owner) {
-        this.name = owner.getDisplayName();
-
-    }
+        this.name = owner.getDisplayName();}
     public void setProfileImage1(AOwner owner) {
-        profileImage1 = owner.getProfileImage();
-
-    }
+        profileImage1 = owner.getProfileImage();}
 
     @Override
     public int describeContents() {
