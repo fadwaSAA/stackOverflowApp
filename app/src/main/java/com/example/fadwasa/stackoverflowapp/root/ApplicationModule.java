@@ -2,9 +2,7 @@ package com.example.fadwasa.stackoverflowapp.root;
 
 import android.app.Application;
 import android.content.Context;
-
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 

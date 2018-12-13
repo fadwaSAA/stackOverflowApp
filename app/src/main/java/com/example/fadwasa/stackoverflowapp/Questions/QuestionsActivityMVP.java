@@ -1,31 +1,31 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
+import com.example.fadwasa.stackoverflowapp.baseMVP.BaseActivityMVP;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AItem;
+import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QItem;
 
 import io.reactivex.Observable;
 
 public interface QuestionsActivityMVP {
 
-    interface View {
-
+    interface View extends BaseActivityMVP.View {
         void updateData(ViewModel viewModel);
-
-        void showSnackbar(String s);
 
     }
 
-    interface Presenter {
-
+    interface Presenter extends BaseActivityMVP.Presenter{
         void loadData(String accountID);
-
-        void rxUnsubscribe();
-
         void setView(QuestionsActivityMVP.View view);
-
+        Observable<ViewModel> result(String accountID);
     }
 
     interface Model {
+        Observable<QItem>  getResultsFromMemory(String userID);
 
-        Observable<ViewModel> result(String accountID);
-
-    }
+        Observable<QItem> getResultsFromNetwork(final String userID);
+        public Observable<AItem> getAcceptedFromMemory();
+        public Observable<AItem> getAcceptedFromNetwork(String userID);
+        public Observable<AItem> getAcceptedData(String accountID);
+        Observable<QItem> getResultData(String userID);
+     }
 }

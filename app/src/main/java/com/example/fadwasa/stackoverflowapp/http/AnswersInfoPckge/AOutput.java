@@ -1,8 +1,4 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
-
-/**
- * Created by Fadwasa on 21/11/2018 AD.
- */
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

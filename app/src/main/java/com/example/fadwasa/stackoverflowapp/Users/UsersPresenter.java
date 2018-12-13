@@ -1,11 +1,17 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
+import com.example.fadwasa.stackoverflowapp.baseMVP.BasePresenter;
+import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.BadgeCounts;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Item;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class UsersPresenter implements UsersActivityMVP.Presenter {
+public class UsersPresenter extends BasePresenter implements UsersActivityMVP.Presenter {
 
     private UsersActivityMVP.View view;
     private Disposable subscription = null;
@@ -18,21 +24,32 @@ public class UsersPresenter implements UsersActivityMVP.Presenter {
     @Override
     public void loadData() {
 
-        subscription = model
-                .result()
+        subscription = result()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<ViewModel>() {
+
+
+                    @Override
+                    protected void onStart() {
+                        super.onStart();
+                        view.ShowProgressBar();
+
+                    }
+
                     @Override
                     public void onComplete() {
+
+                        view.hideProgressBar();
                     }
 
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        if (view != null) {
-                            view.showSnackbar("Error getting users");
+                        view.hideProgressBar();
+                         if (view != null) {
+                            view.showSnackbar("Error getting users",null);
                         }
                     }
 
@@ -44,14 +61,9 @@ public class UsersPresenter implements UsersActivityMVP.Presenter {
                     }
                 });
     }
-
     @Override
-    public void rxUnsubscribe() {
-        if (subscription != null) {
-            if (!subscription.isDisposed()) {
-                subscription.dispose();
-            }
-        }
+     public void rxUnsubscribe() {
+         super.rxUnsubscribe(subscription);
     }
 
     @Override
@@ -59,4 +71,17 @@ public class UsersPresenter implements UsersActivityMVP.Presenter {
         this.view = view;
     }
 
+    @Override
+    public Observable<ViewModel> result() {
+        return Observable.zip(
+                model.getResultData(),
+                model.getBadgeData(),
+                new BiFunction<Item, BadgeCounts, ViewModel>() {
+                    @Override
+                    public ViewModel apply(Item result, BadgeCounts s) {
+                        return new ViewModel(result.getDisplayName(),result.getProfileImage(),result.getAccountId(), s);
+                    }
+                }
+        );
+    }
 }

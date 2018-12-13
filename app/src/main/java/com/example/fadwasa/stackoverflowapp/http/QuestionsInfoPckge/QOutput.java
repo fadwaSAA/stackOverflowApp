@@ -1,12 +1,7 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
-
-/**
- * Created by Fadwasa on 20/11/2018 AD.
- */
+package com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class QOutput {
@@ -32,9 +27,7 @@ public class QOutput {
         this.items = items;
     }
 
-    public Boolean getHasMore() {
-        return hasMore;
-    }
+    public Boolean getHasMore() {return hasMore;}
 
     public void setHasMore(Boolean hasMore) {
         this.hasMore = hasMore;

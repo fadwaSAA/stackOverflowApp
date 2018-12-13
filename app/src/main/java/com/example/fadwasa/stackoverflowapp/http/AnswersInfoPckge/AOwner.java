@@ -1,13 +1,9 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
-
-/**
- * Created by Fadwasa on 20/11/2018 AD.
- */
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
+public class AOwner {
 
     @SerializedName("reputation")
     @Expose
@@ -18,18 +14,29 @@ public class Owner {
     @SerializedName("user_type")
     @Expose
     private String userType;
-    @SerializedName("accept_rate")
-    @Expose
-    private Integer acceptRate;
     @SerializedName("profile_image")
     @Expose
     private String profileImage;
+
+    public AOwner(){
+        this.reputation = 0;
+        this.userId = 0;
+        this.userType = "";
+        this.profileImage = "";
+        this.displayName = "not found";
+        this.link = "";
+        this.acceptRate = 0;
+    }
+
     @SerializedName("display_name")
     @Expose
     private String displayName;
     @SerializedName("link")
     @Expose
     private String link;
+    @SerializedName("accept_rate")
+    @Expose
+    private Integer acceptRate;
 
     public Integer getReputation() {
         return reputation;
@@ -55,14 +62,6 @@ public class Owner {
         this.userType = userType;
     }
 
-    public Integer getAcceptRate() {
-        return acceptRate;
-    }
-
-    public void setAcceptRate(Integer acceptRate) {
-        this.acceptRate = acceptRate;
-    }
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -85,6 +84,14 @@ public class Owner {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Integer getAcceptRate() {
+        return acceptRate;
+    }
+
+    public void setAcceptRate(Integer acceptRate) {
+        this.acceptRate = acceptRate;
     }
 
 }

@@ -1,14 +1,9 @@
-package com.example.fadwasa.stackoverflowapp.http;
-import com.example.fadwasa.stackoverflowapp.http.apimodel.QOutput;
+package com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-
-/**
- * Created by Fadwasa on 20/11/2018 AD.
- */
 
 public interface QuestionInfo {
     @GET("users/{id}/questions")

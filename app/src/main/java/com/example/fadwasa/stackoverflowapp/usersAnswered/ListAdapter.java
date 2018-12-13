@@ -12,19 +12,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
-import java.util.List;
+import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private List<AOwner> list;
+    private ArrayList<ViewModel> list;
     private Context mContext;
     private Integer id;
 
-    public ListAdapter(Context context, List<AOwner> list) {
+    public ListAdapter(Context context, ArrayList<ViewModel> list) {
         this.list = list;
         mContext=context;
     }
@@ -39,10 +38,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     @Override
     public void onBindViewHolder(ListItemViewHolder holder, int position) {
 
-        holder.profileNameA.setText(list.get(position).getDisplayName());
-          Glide.with(mContext).load(list.get(position).getProfileImage()).into(holder.imageA);
-        holder.setIdU(list.get(position).getUserId());
-
+        holder.profileNameA.setText(list.get(position).getName());
+        Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.imageA);
+        holder.setIdU(list.get(position).getAccountId());
     }
 
     @Override
@@ -67,7 +65,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             view.getContext().startActivity(intent);
-
         }
 
         public ListItemViewHolder(View itemView ) {

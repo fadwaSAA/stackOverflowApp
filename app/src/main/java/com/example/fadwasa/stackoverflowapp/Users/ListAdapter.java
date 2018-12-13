@@ -13,21 +13,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
-
-import java.util.List;
-
+import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private List<ViewModel> list;
+    private ArrayList<ViewModel> list;
     private Context mContext;
-    private Integer id;
 
-
-    public ListAdapter(Context context, List<ViewModel> list) {
+    public ListAdapter(Context context, ArrayList<ViewModel> list) {
         this.list = list;
         mContext=context;
     }
@@ -44,19 +40,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
         holder.profileName.setText(list.get(position).getName());
         holder.bronzeBadge.setText(list.get(position).getBronze().toString());
-         Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.image);
+        Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.image);
         holder.setIdU(list.get(position).getAccountId());
-
     }
 
     @Override
     public int getItemCount() {
-
         return list.size();
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {
-
 
         @BindView(R.id.bronze_badge)
         TextView bronzeBadge;
@@ -68,29 +61,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
         @OnClick
         void onClick(View view) {
-             Bundle bundle = new Bundle();
-            Log.d("vall","useridddd555"+idU.toString());
-
+            Bundle bundle = new Bundle();
             bundle.putString("accountID",idU.toString() );
             Intent intent = new Intent(view.getContext(), QuestionsActivity.class);
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             view.getContext().startActivity(intent);
-
         }
 
         public ListItemViewHolder(View itemView ) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            this.idU=idU;
-
         }
+
         void  setIdU(Integer idU){
-
             this.idU=idU;
         }
-
-
     }
 }
 

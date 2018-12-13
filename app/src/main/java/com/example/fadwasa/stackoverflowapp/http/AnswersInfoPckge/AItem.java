@@ -1,8 +1,4 @@
-package com.example.fadwasa.stackoverflowapp.http.apimodel;
-
-/**
- * Created by Fadwasa on 21/11/2018 AD.
- */
+package com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -30,6 +26,27 @@ public class AItem {
     @SerializedName("question_id")
     @Expose
     private Integer questionId;
+
+    public AItem(Integer questionId) {
+        this.owner = null;
+        this.isAccepted = null;
+        this.score = null;
+        this.lastActivityDate = null;
+        this.creationDate = null;
+        this.answerId = null;
+        this.questionId = questionId;
+    }
+
+    public AItem() {
+        this.owner = new AOwner() ;
+        this.isAccepted = false;
+        this.score = null;
+        this.lastActivityDate = null;
+        this.creationDate = null;
+        this.answerId = null;
+        this.questionId = questionId;
+    }
+
 
     public AOwner getOwner() {
         return owner;

@@ -1,7 +1,8 @@
 package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
-import com.example.fadwasa.stackoverflowapp.http.apimodel.AOwner;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AOwner;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -21,8 +22,8 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
     @Override
     public void loadData(String questionID) {
 
-        subscription = model
-                .result(questionID)
+        subscription =
+                result(questionID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<AOwner>() {
@@ -35,13 +36,14 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         if (view != null) {
-                            view.showSnackbar("Error getting users");
+                            view.showSnackbar("Error getting users",null);
                         }
                     }
 
                     @Override
-                    public void onNext(AOwner viewModel) {
+                    public void onNext(AOwner aOwner) {
                         if (view != null) {
+                            ViewModel viewModel = new ViewModel(aOwner);
                             view.updateData(viewModel);
                         }
                     }
@@ -62,4 +64,8 @@ public class UsersAnsweredPresenter implements UsersAnsweredActivityMVP.Presente
         this.view = view;
     }
 
+    @Override
+    public Observable<AOwner> result(String questionID) {
+        return   model.getAnsweredData(questionID);
+    }
 }
