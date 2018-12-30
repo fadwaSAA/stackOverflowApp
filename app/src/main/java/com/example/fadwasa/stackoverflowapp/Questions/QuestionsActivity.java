@@ -1,6 +1,7 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,13 +14,12 @@ import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
 import com.example.fadwasa.stackoverflowapp.root.App;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.Nullable;
 
-public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.View {
+public class QuestionsActivity extends BaseView{
 
-    private final String TAG = QuestionsActivity.class.getName();
 
     @BindView(R.id.recycler_view1)
     RecyclerView recyclerView;
@@ -27,19 +27,19 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
     @BindView(R.id.listActivity_rootView1)
     ViewGroup rootView;
 
-    @Inject
-    QuestionsActivityMVP.Presenter presenter;
+
 
     private ListAdapter listAdapter;
-    private ArrayList<ViewModel> resultList = new ArrayList<>();
+    private List<QuestionsViewModel> resultList = new ArrayList<>();
     String accountID;
     ProgressDialog progressBar;
+    private  QuestionsViewModel mViewModel;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.questions_activity);
         Intent intent = getIntent();
           accountID = intent.getStringExtra("accountID");
@@ -47,13 +47,10 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
         ((App) getApplication()).getQComponent().injectQ(this);
         ButterKnife.bind(this);
         progressBar=new ProgressDialog(this.getApplicationContext());
-
-        presenter.setView(this);
-
-        if(savedInstanceState==null){
-            presenter.loadData(accountID);
-            initAdapter();
-        }
+        mViewModel = ViewModelProviders.of(this).get(QuestionsViewModel.class);
+        progressBar=new ProgressDialog(this.getApplicationContext());
+         initAdapter();
+        loadD();
     }
 
 
@@ -61,14 +58,12 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.rxUnsubscribe();
-         listAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged();
     }
 
 
-    @Override
-    public void updateData(ViewModel viewModel) {
-        resultList.add(viewModel);
+    public void updateData(List<QuestionsViewModel>items) {
+        resultList =items;
         listAdapter.notifyItemInserted(resultList.size() - 1);
     }
 
@@ -78,12 +73,7 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
         super.showSnackbar(msg,rootView1);
      }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        resultList = savedInstanceState.getParcelableArrayList("viewmodelList");
-        initAdapter();
 
-    }
 
     private void initAdapter() {
         listAdapter = new ListAdapter(this.getApplicationContext(),resultList);
@@ -94,11 +84,7 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelableArrayList("viewmodelList",   resultList);
-        super.onSaveInstanceState(savedInstanceState);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,4 +95,19 @@ public class QuestionsActivity extends BaseView implements QuestionsActivityMVP.
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    public void loadD(){
+        mViewModel.loadData(accountID).observe(this, new android.arch.lifecycle.Observer<List<QuestionsViewModel>>() {
+            @Override
+            public void onChanged(@Nullable List<QuestionsViewModel> Items) {
+                updateData(Items);
+                listAdapter.updateData(Items);
+
+            }
+        });
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.fadwasa.stackoverflowapp.root;
 
 import android.app.Application;
+
 import com.example.fadwasa.stackoverflowapp.Questions.DaggerQuestionApplicationComponent;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionApplicationComponent;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsInfoModule;
@@ -14,8 +15,7 @@ import com.example.fadwasa.stackoverflowapp.usersAnswered.UsersAnsweredInfoModul
 
 
 public class App extends Application {
-    ApplicationComponent component;
-
+    private ApplicationComponent component;
     private UserApplicationComponent uComponent;
     private AnswerApplicationComponent aComponent;
     private QuestionApplicationComponent qComponent;

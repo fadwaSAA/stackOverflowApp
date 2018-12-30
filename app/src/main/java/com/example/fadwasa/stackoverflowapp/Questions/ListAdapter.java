@@ -19,12 +19,17 @@ import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private List<ViewModel> list;
+    private List<QuestionsViewModel> list;
     private Context mContext;
 
-    public ListAdapter(Context context, List<ViewModel> list) {
+    public ListAdapter(Context context, List<QuestionsViewModel> list) {
         this.list = list;
         mContext=context;
+    }
+    void updateData(List<QuestionsViewModel> list){
+        this.list = list;
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -80,7 +85,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             view.getContext().startActivity(intent);
-
         }
 
 

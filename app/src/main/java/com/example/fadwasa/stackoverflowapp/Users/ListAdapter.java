@@ -12,21 +12,27 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
-import java.util.ArrayList;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Item;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private ArrayList<ViewModel> list;
+    private List<Item> list;
     private Context mContext;
-    private Integer id;
 
 
-    public ListAdapter(Context context, ArrayList<ViewModel> list) {
+    public ListAdapter(Context context, List<Item> list) {
         this.list = list;
         mContext=context;
+    }
+
+    void updateData(List<Item> list){
+        this.list = list;
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -39,9 +45,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     @Override
     public void onBindViewHolder(ListItemViewHolder holder, int position) {
 
-        holder.profileName.setText(list.get(position).getName());
-        holder.bronzeBadge.setText(list.get(position).getBronze().toString());
-         Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.image);
+        holder.profileName.setText(list.get(position).getDisplayName());
+        holder.bronzeBadge.setText(list.get(position).getBadgeCounts().getBronze().toString());
+        Glide.with(mContext).load(list.get(position).getProfileImage()).into(holder.image);
         holder.setIdU(list.get(position).getAccountId());
 
     }
@@ -65,7 +71,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
         @OnClick
         void onClick(View view) {
-             Bundle bundle = new Bundle();
+            Bundle bundle = new Bundle();
             bundle.putString("accountID",idU.toString() );
             Intent intent = new Intent(view.getContext(), QuestionsActivity.class);
             intent.putExtras(bundle);

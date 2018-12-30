@@ -2,10 +2,7 @@ package com.example.fadwasa.stackoverflowapp.Users;
 
 import com.example.fadwasa.stackoverflowapp.http.ApiModuleForInfo;
 import com.example.fadwasa.stackoverflowapp.root.ApplicationComponent;
-import com.example.fadwasa.stackoverflowapp.root.ApplicationModule;
 import com.example.fadwasa.stackoverflowapp.root.UserScope;
-
-import javax.inject.Singleton;
 
 import dagger.Component;
 

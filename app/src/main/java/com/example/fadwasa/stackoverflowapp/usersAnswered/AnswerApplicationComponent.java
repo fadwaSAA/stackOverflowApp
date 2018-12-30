@@ -3,6 +3,7 @@ package com.example.fadwasa.stackoverflowapp.usersAnswered;
 import com.example.fadwasa.stackoverflowapp.http.ApiModuleForInfo;
 import com.example.fadwasa.stackoverflowapp.root.ApplicationComponent;
 import com.example.fadwasa.stackoverflowapp.root.UserAnsweredScope;
+
 import dagger.Component;
 
 

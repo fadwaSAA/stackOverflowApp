@@ -1,9 +1,6 @@
 package com.example.fadwasa.stackoverflowapp.Questions;
 
 import android.content.Context;
-
-import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QuestionInfo;
-import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.UserAnsweredInfo;
 import com.example.fadwasa.stackoverflowapp.root.QuestionScope;
 import dagger.Module;
 import dagger.Provides;
@@ -16,14 +13,12 @@ public class QuestionsInfoModule {
         this.context=context;
     }
 
+
+
+    @QuestionScope
     @Provides
-    public QuestionsActivityMVP.Presenter provideUsersActivityPresenter(QuestionsActivityMVP.Model usersModel) {
-        return new QuestionsPresenter(usersModel);
-    }
-@QuestionScope
-    @Provides
-    public QuestionsActivityMVP.Model provideTopUsersActivityModel(QuestionInfo userApiService, UserAnsweredInfo userAnsweredInfo) {
-        return new QuestionsModel(userApiService,userAnsweredInfo);
+    public QuestionsViewModel provideUsersActivityPresenter(QuestionsRepository usersModel) {
+        return new QuestionsViewModel(usersModel);
     }
 
 }

@@ -12,19 +12,25 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.fadwasa.stackoverflowapp.Questions.QuestionsActivity;
 import com.example.fadwasa.stackoverflowapp.R;
-import java.util.ArrayList;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AItem;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
-    private ArrayList<ViewModel> list;
+    private List<AItem> list;
     private Context mContext;
 
-    public ListAdapter(Context context, ArrayList<ViewModel> list) {
+    public ListAdapter(Context context, List<AItem> list) {
         this.list = list;
         mContext=context;
+    }
+    void updateData(List<AItem> list){
+        this.list = list;
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -37,9 +43,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     @Override
     public void onBindViewHolder(ListItemViewHolder holder, int position) {
 
-        holder.profileNameA.setText(list.get(position).getName());
-          Glide.with(mContext).load(list.get(position).getProfileImage1()).into(holder.imageA);
-        holder.setIdU(list.get(position).getAccountId());
+        holder.profileNameA.setText(list.get(position).getOwner().getDisplayName());
+          Glide.with(mContext).load(list.get(position).getOwner().getProfileImage()).into(holder.imageA);
+        holder.setIdU(list.get(position).getOwner().getUserId());
 
     }
 

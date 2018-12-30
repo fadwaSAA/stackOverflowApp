@@ -1,11 +1,10 @@
 package com.example.fadwasa.stackoverflowapp.http;
 
-import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QuestionInfo;
 import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.UserAnsweredInfo;
+import com.example.fadwasa.stackoverflowapp.http.QuestionsInfoPckge.QuestionInfo;
 import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.UserInfo;
 
 import java.io.IOException;
-
 
 import dagger.Module;
 import dagger.Provides;
@@ -39,7 +38,11 @@ public class ApiModuleForInfo {
                 HttpUrl url = request.url().newBuilder().addQueryParameter(
                         "site",
                         "stackoverflow"
+                ).addQueryParameter(
+                        "key",
+                        "fev4LVzXZRQHfNF8moVuYw(("
                 ).build();
+
                 request = request.newBuilder().url(url).build();
                 return chain.proceed(request);
             }

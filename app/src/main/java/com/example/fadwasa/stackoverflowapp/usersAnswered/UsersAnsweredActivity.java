@@ -1,24 +1,26 @@
 package com.example.fadwasa.stackoverflowapp.usersAnswered;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
+ import android.view.MenuItem;
 import android.view.ViewGroup;
 import com.example.fadwasa.stackoverflowapp.R;
 import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
+import com.example.fadwasa.stackoverflowapp.http.AnswersInfoPckge.AItem;
 import com.example.fadwasa.stackoverflowapp.root.App;
 import java.util.ArrayList;
-import javax.inject.Inject;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.Nullable;
 
-public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActivityMVP.View {
+public class UsersAnsweredActivity extends BaseView  {
 
-    private final String TAG = UsersAnsweredActivity.class.getName();
 
     @BindView(R.id.recycler_viewA)
     RecyclerView recyclerView;
@@ -26,13 +28,12 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
     @BindView(R.id.listActivity_rootViewA)
     ViewGroup rootView;
 
-    @Inject
-    UsersAnsweredActivityMVP.Presenter presenter;
 
     private ListAdapter listAdapter;
-    private ArrayList<ViewModel> resultList = new ArrayList<>();
+    private List<AItem> resultList = new ArrayList<>();
     private String questionID;
     ProgressDialog progressBar;
+    private  AnsweredViewModel mViewModel;
 
 
     @Override
@@ -44,15 +45,11 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((App) getApplication()).getAnsweredComponenet().injectA(this);
         ButterKnife.bind(this);
+         mViewModel = ViewModelProviders.of(this).get(AnsweredViewModel.class);
         progressBar=new ProgressDialog(this.getApplicationContext());
+         loadD();
+        initAdapter();
 
-        presenter.setView(this);
-        if(savedInstanceState==null){
-
-            presenter.loadData(questionID);
-            initAdapter();
-
-        }
 
 
 
@@ -61,12 +58,10 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.rxUnsubscribe();
-        listAdapter.notifyDataSetChanged();
+         listAdapter.notifyDataSetChanged();
     }
-    @Override
-    public void updateData(ViewModel viewModel) {
-        resultList.add(viewModel);
+     public void updateData(List <AItem> list) {
+        resultList=list;
         listAdapter.notifyItemInserted(resultList.size() - 1);
     }
 
@@ -77,12 +72,7 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
      }
 
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        resultList = savedInstanceState.getParcelableArrayList("viewmodelList");
-          initAdapter();
 
-    }
 
     private void initAdapter() {
         listAdapter = new ListAdapter(this.getApplicationContext(),resultList);
@@ -93,11 +83,7 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelableArrayList("viewmodelList",   resultList);
-          super.onSaveInstanceState(savedInstanceState);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,6 +93,18 @@ public class UsersAnsweredActivity extends BaseView implements UsersAnsweredActi
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadD(){
+        mViewModel.loadData(questionID).observe(this, new android.arch.lifecycle.Observer<List<AItem>>() {
+            @Override
+            public void onChanged(@Nullable List<AItem> aItems) {
+                  updateData(aItems);
+                listAdapter.updateData(aItems);
+
+            }
+        });
+
     }
 
 }

@@ -1,20 +1,23 @@
 package com.example.fadwasa.stackoverflowapp.Users;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+ import android.view.ViewGroup;
 import com.example.fadwasa.stackoverflowapp.R;
 import com.example.fadwasa.stackoverflowapp.baseMVP.BaseView;
+import com.example.fadwasa.stackoverflowapp.http.UsersInfoPckg.Item;
 import com.example.fadwasa.stackoverflowapp.root.App;
 import java.util.ArrayList;
- import javax.inject.Inject;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.Nullable;
 
-public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
+public class UsersActivity extends BaseView{
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -22,12 +25,12 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
     @BindView(R.id.listActivity_rootView)
     ViewGroup rootView;
 
-    @Inject
-    UsersActivityMVP.Presenter presenter;
+
 
     private ListAdapter listAdapter;
-    private ArrayList<ViewModel> resultList = new ArrayList<>();
-      ProgressDialog progressBar;
+    private List<Item> resultList = new ArrayList<>();
+    ProgressDialog progressBar;
+    private  UsersViewModel mViewModel;
 
 
     @Override
@@ -36,39 +39,33 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
         setContentView(R.layout.users_activity);
         ((App) getApplication()).getUserApplicationComponent().inject(this);
         ButterKnife.bind(this);
+        mViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);
         progressBar = new ProgressDialog(this);
+         super.ShowProgressBar();
 
-        presenter.setView(this);
-        if (savedInstanceState == null){
-            presenter.loadData();
-            initAdapter();
-        }
+        initAdapter();
+        loadD();
+        super.hideProgressBar();
+
+
     }
 
-    @Override
-    public void updateData(ViewModel viewModel) {
-        resultList.add(viewModel);
+     public void updateData(List<Item> items) {
+        resultList = items;
         listAdapter.notifyItemInserted(resultList.size() - 1);
     }
 
     @Override
     public void showSnackbar(String msg,ViewGroup rootView1) {
-         rootView1=rootView;
+        rootView1=rootView;
         super.showSnackbar(msg,rootView1);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.rxUnsubscribe();
-         listAdapter.notifyDataSetChanged();
-    }
+        listAdapter.notifyDataSetChanged();}
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        resultList = savedInstanceState.getParcelableArrayList("viewmodelList");
-         initAdapter();
 
-    }
 
     private void initAdapter() {
         listAdapter = new ListAdapter(this.getApplicationContext(),resultList);
@@ -79,10 +76,20 @@ public class UsersActivity extends BaseView  implements UsersActivityMVP.View {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelableArrayList("viewmodelList",   resultList);
-         super.onSaveInstanceState(savedInstanceState);
+
+    public void loadD(){
+        mViewModel.loadData().observe(this, new android.arch.lifecycle.Observer<List<Item>>() {
+            @Override
+            public void onChanged(@Nullable List<Item> Items) {
+                 updateData(Items);
+                listAdapter.updateData(Items);
+
+
+            }
+
+        });
+
     }
+
 
 }
